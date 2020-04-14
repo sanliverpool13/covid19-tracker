@@ -1,0 +1,12 @@
+.gridContainer {
+    border: 1px solid black;
+    height: 98vh;
+}
+
+.gridItem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+}
+

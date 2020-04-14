@@ -1,13 +1,13 @@
 import React from 'react';
-import Cases from './components/Cases';
-import './app.module.css';
+import Main from './components/Main/MainPage';
+import styles from './app.module.css';
+import { Container } from "@material-ui/core";
 
 const App = () => {
     return(
-        <div>
-            <h1>Corona Data App</h1>
-            <Cases/>
-        </div>
+        <Container className={styles.containerWidth}>
+            <Main/>
+        </Container>
     );
 };
 

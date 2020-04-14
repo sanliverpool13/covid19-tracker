@@ -1,1 +1,1 @@
-GET https://covid19.mathdro.id/api/
+GET https://covid19.mathdro.id/api/countries/ESP

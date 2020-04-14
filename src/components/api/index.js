@@ -1,14 +1,8 @@
 import axios from 'axios';
 
-export const getData = async () => {
-    try {
-        let res = await axios.get('https://covid19.mathdro.id/api/');
-        let confirmed = res.data.confirmed.value;
-        let recovered = res.data.recovered.value;
-        let deaths = res.data.deaths.value;
-        return {confirmed,recovered,deaths};
-    } catch (error) {
-        return {errors:error};
-    }
-    
-};
+// get global cases endpoint
+export const getGlobal = () =>  axios.get('https://covid19.mathdro.id/api');
+
+// get cases by country endpoint
+export const getCountry = (country) => axios.get(`https://covid19.mathdro.id/api/countries/${country}`);
+
