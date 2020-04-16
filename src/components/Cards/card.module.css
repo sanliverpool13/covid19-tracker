@@ -1,0 +1,33 @@
+.card {
+    min-width: 275px; /* always need to give dimensions in terms of px, em, vh*/
+    min-height: 220px;
+    
+}
+
+.cardHeader {
+    /* border: 1px solid black; */
+    height: 50px;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+.cardTitle {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardContent {
+    text-align: center;
+    height: 150px;
+    /* border: 1px solid black; */
+    box-sizing: border-box;
+}
+
+.recoveredText{
+    color: green;
+}
+
+.deathsText{
+    color: red;
+}
