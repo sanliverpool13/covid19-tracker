@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState, useReducer, useCallback } from 'react';
 import { Grid, Card, CardHeader, CardContent, Paper, InputBase, 
      CardActionArea, Typography, IconButton } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
@@ -8,12 +8,14 @@ import cx from 'classnames';
 import DataCard from "../Cards/Card";
 import SearchItem from "../Search/Search";
 
-import { getGlobal } from "../api/index";
+import { getGlobal, getCountry } from "../api/index";
 
 const initState = {
+     category:'Global',
      confirmed:0,
      recovered:0,
      deaths:0,
+     error:''
 };
 
 const reducer = (state,action) => {
@@ -26,8 +28,21 @@ const reducer = (state,action) => {
                     recovered: payload.recovered.value,
                     deaths: payload.deaths.value,
                };
+          case 'Country_Code':
+               return{
+                    ...state,
+                    category: payload.category,
+                    confirmed: payload.data.confirmed.value,
+                    recovered: payload.data.recovered.value,
+                    deaths: payload.data.deaths.value,
+               }
+          case 'Error':
+               return{
+                    ...state,
+                    error: payload
+               }
           default:
-               throw new Error("Wrong Dispatch");
+               throw new Error("Error");
      }
 }
 
@@ -45,17 +60,52 @@ const Main = () => {
                    
                })
                .catch(err => console.log(err));
-     },[getGlobal]);
+     },[]);
+
+     const countryClick = useCallback( async (e,name,code) => {
+          
+          try {
+                let res = await getCountry(code);
+                dispatch({
+                     type: 'Country_Code',
+                     payload: {data:res.data,category:name}
+                });
+               
+          } catch(err) {
+                dispatch({
+                     type:'Error',
+                     payload: err
+                });
+          }
+     },[getCountry]);
 
      return (
           <Grid container className={styles.gridContainer}>
-               <Grid item xs={12} className={styles.gridItem}>
-                    <DataCard title="Confirmed" count={state.confirmed} />
-                    <DataCard title="Recovered" count={state.recovered} />
-                    <DataCard title="Deaths" count={state.deaths}/>
+               <Grid item>
+                    <Typography variant="h2" style={{margin:"auto"}}>
+                         {state.category}
+                    </Typography>
                </Grid>
-               <Grid item xs={12} className={styles.gridItem2}>
-                    <SearchItem/>
+               <Grid item md={12} className={styles.gridItem}>
+                    <Grid item>
+                         <DataCard title="Confirmed" count={state.confirmed} />
+                    </Grid>
+                    <Grid item>
+                         <DataCard title="Deaths" count={state.deaths} />
+                    </Grid>
+                    <Grid item>
+                         <DataCard title="Recovered" count={state.recovered} />
+                         
+                    </Grid>
+                    
+               </Grid>
+               <Grid item md={12} className={styles.gridItem2}>
+                    <SearchItem onCountryClick={countryClick}/>
+               </Grid>
+               <Grid item md={12}>
+                    <div>
+                         {state.error}
+                    </div>
                </Grid>
           </Grid>
           
