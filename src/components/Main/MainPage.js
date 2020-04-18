@@ -6,7 +6,7 @@ import styles from './main.module.css';
 import cx from 'classnames';
 // import useStyles from './main.css';
 import DataCard from "../Cards/Card";
-import SearchItem from "../Search/Search";
+import {SearchComponent, SearchDropDown} from "../Search/Search";
 
 import { getGlobal, getCountry } from "../api/index";
 
@@ -24,6 +24,7 @@ const reducer = (state,action) => {
           case 'GOT_CASES':
                return{
                     ...state,
+                    category: 'Global',
                     confirmed: payload.confirmed.value,
                     recovered: payload.recovered.value,
                     deaths: payload.deaths.value,
@@ -50,17 +51,27 @@ const Main = () => {
 
      const [state, dispatch] = useReducer(reducer,initState);
 
-     useEffect(() => {
-          getGlobal()
-               .then(res => {
-                    dispatch({
-                         type:'GOT_CASES',
-                         payload: res.data
-                    });
-                   
-               })
-               .catch(err => console.log(err));
+     const getGlobalTotal = useCallback(async () => {
+          try {
+               let res = await getGlobal();
+               dispatch({
+                    type:'GOT_CASES',
+                    payload: res.data
+               });
+               
+          } catch(err) {
+               dispatch({
+                    type:'Error',
+                    payload: err
+               });
+          }
+          
+
      },[]);
+
+     useEffect(() => {
+          getGlobalTotal();
+     },[getGlobalTotal]);
 
      const countryClick = useCallback( async (e,name,code) => {
           
@@ -85,6 +96,7 @@ const Main = () => {
                     <Typography variant="h2" style={{margin:"auto"}}>
                          {state.category}
                     </Typography>
+                    <a href="#" onClick={getGlobalTotal}>Global</a>
                </Grid>
                <Grid item md={12} className={styles.gridItem}>
                     <Grid item>
@@ -99,8 +111,12 @@ const Main = () => {
                     </Grid>
                     
                </Grid>
-               <Grid item md={12} className={styles.gridItem2}>
-                    <SearchItem onCountryClick={countryClick}/>
+               <Grid item md={12} className={styles.gridItem2} >
+                    
+                    <SearchComponent >
+                         
+                         <SearchDropDown onCountryClick={countryClick}/>
+                    </SearchComponent>
                </Grid>
                <Grid item md={12}>
                     <div>

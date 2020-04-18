@@ -1,27 +1,86 @@
-.searchInput {
-    padding: 2px 4px;
-    display: flex;
-    width: 370px;
-    margin-top: 100px;
+
+:root{
+    --search-width: 370px;
+    --speed: 500ms;
+    --padding-vertical: 2px;
+    --padding-horizontal: 4px;
 }
+
+.searchInput {
+    padding: var(--padding-vertical) var(--padding-horizontal);
+    display: flex;
+    width: var(--search-width);
+    margin-top: 40px;
+}
+
+.searchDropDown::-webkit-scrollbar{
+    width: 7px;
+}
+
+.searchDropDown::-webkit-scrollbar-track{
+    background: #555;
+    visibility: hidden;
+}
+
+.searchDropDown::-webkit-scrollbar-thumb{
+    background: #888;
+}
+
+
 
 .searchInputBase {
-    width: 90%;
-    margin-left: 10px;
+    width: calc(var(--search-width) * 0.9);
+    margin-left: calc(var(--search-width) * 0.027);
+    font-size: 15px;
 }
 
-.options {
+.searchDropDown {
 
-    height: 200px;
-    width: 370px;
-    padding-left: 4px;
-    padding-right: 4px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    max-height: 300px;
+    width: calc(var(--search-width)*1);
+    padding: var(--padding-vertical) var(--padding-horizontal);
     overflow-y: auto;
+    transition: height var(--speed) ease !important;
 }
 
-.listItem:hover {
+.menu {
+    width: 100%;
+}
+
+/* CSS Transition of Drop Down */
+.searchMenu-enter {
+    opacity: 0;
+}
+
+.searchMenu-enter-active {
+    opacity: 1;
+    transition: opacity 200ms;
+}
+
+.searchMenu-exit {
+    opacity: 1;
+}
+
+.searchMenu-exit-active {
+    opacity: 0;
+}
+
+.searchItem {
+    height:40px;
+    display: flex;
+    align-items: center;
+    transition: background var(--speed);
+    padding: calc(var(--search-width) * 0.027);
     cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-size: 15px;
+}
+
+.searchItem:hover {
     background-color: #eeeeee;
+}
+
+.divider {
+    border: 1px solid grey;
 }
