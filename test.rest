@@ -1,1 +1,2 @@
-GET https://covid19.mathdro.id/api/countries/USA
+GET https://covid19.mathdro.id/api/daily/4-17-2020
+

@@ -4,7 +4,7 @@ import styles from './card.module.css';
 
 
 
-const DataCard = ({title,count}) => {
+const DataCard = ({title,count,lastUpdate}) => {
 
 
 
@@ -14,17 +14,18 @@ const DataCard = ({title,count}) => {
         <Card className={styles.card} raised>
             <CardHeader
                 title={
-                    <Typography variant="h5"  className={styles.cardTitle}>
+                    <Typography variant="h5" className={styles.cardTitle} gutterBottom>
                         {title}
                     </Typography>
                 }
                 className={styles.cardHeader}
             />
             <CardContent className={styles.cardContent}>
-                <Typography variant="h3" 
+                <Typography variant="h4" 
                 className={(title==='Recovered') ? styles.recoveredText : `${(title === 'Deaths') ? styles.deathsText : null}`}>
                     {count}
                 </Typography>
+                <Typography variant="caption"><b>Last Updated: </b>{lastUpdate}</Typography>
             </CardContent>
         </Card>
      );

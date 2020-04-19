@@ -3,6 +3,13 @@
     height: 98vh;
 }
 
+.gridItemTitle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .gridItem{
     display: flex;
     justify-content: space-evenly;
@@ -21,3 +28,10 @@
 
 
 
+.global {
+    position: absolute;
+    left: 135px;
+    text-decoration: none;
+    color: black;
+
+}

@@ -11,6 +11,8 @@
     display: flex;
     width: var(--search-width);
     margin-top: 40px;
+    background-color: #212121 !important;
+    color: white !important;
 }
 
 .searchDropDown::-webkit-scrollbar{
@@ -32,6 +34,12 @@
     width: calc(var(--search-width) * 0.9);
     margin-left: calc(var(--search-width) * 0.027);
     font-size: 15px;
+    background-color: #212121;
+    color: white !important;
+}
+
+.searchButton {
+    color: white !important;
 }
 
 .searchDropDown {
@@ -41,6 +49,8 @@
     padding: var(--padding-vertical) var(--padding-horizontal);
     overflow-y: auto;
     transition: height var(--speed) ease !important;
+    background-color: #212121 !important;
+    
 }
 
 .menu {
@@ -63,6 +73,7 @@
 
 .searchMenu-exit-active {
     opacity: 0;
+    transition: opacity 200;
 }
 
 .searchItem {
@@ -73,7 +84,7 @@
     padding: calc(var(--search-width) * 0.027);
     cursor: pointer;
     text-decoration: none;
-    color: black;
+    color: white;
     font-size: 15px;
 }
 

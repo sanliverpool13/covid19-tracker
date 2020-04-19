@@ -8,15 +8,41 @@ import cx from 'classnames';
 import DataCard from "../Cards/Card";
 import {SearchComponent, SearchDropDown} from "../Search/Search";
 
-import { getGlobal, getCountry } from "../api/index";
+import { getGlobal, getCountry, filterDailyCanada } from "../api/index";
 
 const initState = {
      category:'Global',
      confirmed:0,
      recovered:0,
      deaths:0,
+     lastUpdate: '',
      error:''
 };
+
+const toReadableDate = (date) => {
+     let year = date.substring(0,4);
+     let monthDigit = date.substring(5,7);
+     let day = date.substring(8,10);
+
+     let hour = date.substring(11,16);
+
+     let digit_to_month = {
+          '01': 'January',
+          '02': 'February',
+          '03': 'March',
+          '04': 'April',
+          '05': 'May',
+          '06': 'June',
+          '07': 'July',
+          '08': 'August',
+          '09': 'September',
+          '10': 'October',
+          '11': 'November',
+          '12': 'December',
+      };
+      let month = digit_to_month[monthDigit];
+      return `${month} ${day}, ${year} ${hour}`;
+}
 
 const reducer = (state,action) => {
      const {type,payload} = action;
@@ -28,6 +54,7 @@ const reducer = (state,action) => {
                     confirmed: payload.confirmed.value,
                     recovered: payload.recovered.value,
                     deaths: payload.deaths.value,
+                    lastUpdate: toReadableDate(payload.lastUpdate),
                };
           case 'Country_Code':
                return{
@@ -36,6 +63,7 @@ const reducer = (state,action) => {
                     confirmed: payload.data.confirmed.value,
                     recovered: payload.data.recovered.value,
                     deaths: payload.data.deaths.value,
+                    lastUpdate: toReadableDate(payload.data.lastUpdate),
                }
           case 'Error':
                return{
@@ -92,21 +120,21 @@ const Main = () => {
 
      return (
           <Grid container className={styles.gridContainer}>
-               <Grid item>
-                    <Typography variant="h2" style={{margin:"auto"}}>
+               <Grid item md={12} className={styles.gridItemTitle}>
+                    <Typography variant="h2"  >
                          {state.category}
                     </Typography>
-                    <a href="#" onClick={getGlobalTotal}>Global</a>
+                    <a href="#" onClick={getGlobalTotal} className={styles.global}>Global</a>
                </Grid>
                <Grid item md={12} className={styles.gridItem}>
                     <Grid item>
-                         <DataCard title="Confirmed" count={state.confirmed} />
+                         <DataCard title="Confirmed" count={state.confirmed} lastUpdate={state.lastUpdate}/>
                     </Grid>
                     <Grid item>
-                         <DataCard title="Deaths" count={state.deaths} />
+                         <DataCard title="Deaths" count={state.deaths} lastUpdate={state.lastUpdate}/>
                     </Grid>
                     <Grid item>
-                         <DataCard title="Recovered" count={state.recovered} />
+                         <DataCard title="Recovered" count={state.recovered} lastUpdate={state.lastUpdate}/>
                          
                     </Grid>
                     
