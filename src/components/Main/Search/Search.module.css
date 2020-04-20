@@ -1,4 +1,12 @@
 
+.searchGridItem {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* border: 1px solid black; */
+    height: 60%;
+}
+
 :root{
     --search-width: 370px;
     --speed: 500ms;
@@ -6,7 +14,7 @@
     --padding-horizontal: 4px;
 }
 
-.searchInput {
+.searchComponent {
     padding: var(--padding-vertical) var(--padding-horizontal);
     display: flex;
     width: var(--search-width);
@@ -30,7 +38,7 @@
 
 
 
-.searchInputBase {
+.searchInput {
     width: calc(var(--search-width) * 0.9);
     margin-left: calc(var(--search-width) * 0.027);
     font-size: 15px;
@@ -38,7 +46,7 @@
     color: white !important;
 }
 
-.searchButton {
+.searchIcon {
     color: white !important;
 }
 
@@ -86,12 +94,13 @@
     text-decoration: none;
     color: white;
     font-size: 15px;
+    
 }
 
 .searchItem:hover {
-    background-color: #eeeeee;
+    background-color: #141414;
 }
 
 .divider {
-    border: 1px solid grey;
+    border: 1px solid white;
 }

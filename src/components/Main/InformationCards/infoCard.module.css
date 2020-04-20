@@ -1,32 +1,40 @@
-.card {
-    min-width: 275px; /* always need to give dimensions in terms of px, em, vh*/
-    min-height: 220px;
-    background-color: #212121 !important;
+.gridCardsRow{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    /* border: 1px solid black; */
+    height: 40%;
 }
 
-.cardHeader {
+.infoCard {
+    min-width: 275px; /* always need to give dimensions in terms of px, em, vh*/
+    min-height: 220px;
+    background-color: #141414 !important;
+}
+
+.infoCardHeader {
     /* border: 1px solid black; */
     height: 50px;
     box-sizing: border-box;
     margin-top: 20px;
     color: white;
-    background-color: #212121;
+    background-color: #141414;
 }
 
-.cardTitle {
+.infoCardTitle {
     /* display:flex;
     justify-content: center;
     align-items: center; */
     color: white;
 }
 
-.cardContent {
+.infoCardContent {
     /* text-align: center; */
     height: 150px;
     /* border: 1px solid black; */
     box-sizing: border-box;
     color: white;
-    background-color: #212121;
+    background-color: #141414;
 }
 
 .recoveredText{

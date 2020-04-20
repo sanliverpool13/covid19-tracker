@@ -1,25 +1,25 @@
 import React, { useEffect, useState, useReducer, useCallback } from 'react';
-import { Grid, Card, CardHeader, CardContent, Paper, InputBase, 
-     CardActionArea, Typography, IconButton } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
+import { Grid, Typography,} from "@material-ui/core";
 import styles from './main.module.css';
 import cx from 'classnames';
-// import useStyles from './main.css';
-import DataCard from "../Cards/Card";
-import {SearchComponent, SearchDropDown} from "../Search/Search";
+import SearchCompRow from './Search/SearchComponentRow';
+
+import TitleRow from "./TitleRow/TitleRow";
+import InfoCardsRow from './InformationCards/InfoCardsRow';
+import InfoCard from './InformationCards/InfoCard';
 
 import { getGlobal, getCountry, filterDailyCanada } from "../api/index";
 
-const initState = {
+const initialState = {
      category:'Global',
      confirmed:0,
      recovered:0,
      deaths:0,
-     lastUpdate: '',
+     lastUpdated: '',
      error:''
 };
 
-const toReadableDate = (date) => {
+const convertDateToReadable = (date) => {
      let year = date.substring(0,4);
      let monthDigit = date.substring(5,7);
      let day = date.substring(8,10);
@@ -54,7 +54,7 @@ const reducer = (state,action) => {
                     confirmed: payload.confirmed.value,
                     recovered: payload.recovered.value,
                     deaths: payload.deaths.value,
-                    lastUpdate: toReadableDate(payload.lastUpdate),
+                    lastUpdated: convertDateToReadable(payload.lastUpdate),
                };
           case 'Country_Code':
                return{
@@ -63,7 +63,7 @@ const reducer = (state,action) => {
                     confirmed: payload.data.confirmed.value,
                     recovered: payload.data.recovered.value,
                     deaths: payload.data.deaths.value,
-                    lastUpdate: toReadableDate(payload.data.lastUpdate),
+                    lastUpdated: convertDateToReadable(payload.data.lastUpdate),
                }
           case 'Error':
                return{
@@ -75,9 +75,10 @@ const reducer = (state,action) => {
      }
 }
 
-const Main = () => {
+const MainPage = () => {
 
-     const [state, dispatch] = useReducer(reducer,initState);
+     const [state, dispatch] = useReducer(reducer,initialState);
+     const { confirmed,recovered,deaths, lastUpdated} = state;
 
      const getGlobalTotal = useCallback(async () => {
           try {
@@ -120,32 +121,13 @@ const Main = () => {
 
      return (
           <Grid container className={styles.gridContainer}>
-               <Grid item md={12} className={styles.gridItemTitle}>
-                    <Typography variant="h2"  >
-                         {state.category}
-                    </Typography>
-                    <a href="#" onClick={getGlobalTotal} className={styles.global}>Global</a>
-               </Grid>
-               <Grid item md={12} className={styles.gridItem}>
-                    <Grid item>
-                         <DataCard title="Confirmed" count={state.confirmed} lastUpdate={state.lastUpdate}/>
-                    </Grid>
-                    <Grid item>
-                         <DataCard title="Deaths" count={state.deaths} lastUpdate={state.lastUpdate}/>
-                    </Grid>
-                    <Grid item>
-                         <DataCard title="Recovered" count={state.recovered} lastUpdate={state.lastUpdate}/>
-                         
-                    </Grid>
-                    
-               </Grid>
-               <Grid item md={12} className={styles.gridItem2} >
-                    
-                    <SearchComponent >
-                         
-                         <SearchDropDown onCountryClick={countryClick}/>
-                    </SearchComponent>
-               </Grid>
+               <TitleRow title={state.category} getGlobalTotal={getGlobalTotal}/>
+               <InfoCardsRow>
+                    <InfoCard title="Confirmed" countOfCases={confirmed} lastUpdated={lastUpdated}/>
+                    <InfoCard title="Deaths" countOfCases={deaths} lastUpdated={lastUpdated}/>
+                    <InfoCard title="Recovered" countOfCases={recovered} lastUpdated={lastUpdated}/>
+               </InfoCardsRow>
+               <SearchCompRow onCountryClick={countryClick}/>
                <Grid item md={12}>
                     <div>
                          {state.error}
@@ -156,4 +138,6 @@ const Main = () => {
      );
 }
 
-export default Main;
+
+
+export default MainPage;
