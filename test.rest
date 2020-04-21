@@ -1,2 +1,3 @@
-GET https://covid19.mathdro.id/api/daily/4-17-2020
+GET https://covid19.mathdro.id/api/daily/4-19-2020
+
 

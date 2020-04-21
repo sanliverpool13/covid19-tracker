@@ -14,7 +14,16 @@
     color: white;
 }
 
-.backToGlobalLink {
+.globalLink {
     /* text-decoration: none; */
+    color: white !important;
+    background-color: black !important;
+}
+
+
+.globalTooltip {
+    
     color: white;
 }
+
+

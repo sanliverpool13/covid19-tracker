@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useReducer, useCallback } from 'react';
-import { Grid, Typography,} from "@material-ui/core";
+import React, { useEffect, useReducer, useCallback } from 'react';
+import { Grid,} from "@material-ui/core";
 import styles from './main.module.css';
-import cx from 'classnames';
+// import cx from 'classnames';
 import SearchCompRow from './Search/SearchComponentRow';
 
 import TitleRow from "./TitleRow/TitleRow";
 import InfoCardsRow from './InformationCards/InfoCardsRow';
-import InfoCard from './InformationCards/InfoCard';
+import ChartRow from './Charts/PieChart';
 
 import { getGlobal, getCountry, filterDailyCanada } from "../api/index";
 
@@ -78,7 +78,6 @@ const reducer = (state,action) => {
 const MainPage = () => {
 
      const [state, dispatch] = useReducer(reducer,initialState);
-     const { confirmed,recovered,deaths, lastUpdated} = state;
 
      const getGlobalTotal = useCallback(async () => {
           try {
@@ -102,13 +101,13 @@ const MainPage = () => {
           getGlobalTotal();
      },[getGlobalTotal]);
 
-     const countryClick = useCallback( async (e,name,code) => {
+     const countryClick = useCallback( async (e,country) => {
           
           try {
-                let res = await getCountry(code);
+                let res = await getCountry(country);
                 dispatch({
                      type: 'Country_Code',
-                     payload: {data:res.data,category:name}
+                     payload: {data:res.data,category:country}
                 });
                
           } catch(err) {
@@ -122,17 +121,9 @@ const MainPage = () => {
      return (
           <Grid container className={styles.gridContainer}>
                <TitleRow title={state.category} getGlobalTotal={getGlobalTotal}/>
-               <InfoCardsRow>
-                    <InfoCard title="Confirmed" countOfCases={confirmed} lastUpdated={lastUpdated}/>
-                    <InfoCard title="Deaths" countOfCases={deaths} lastUpdated={lastUpdated}/>
-                    <InfoCard title="Recovered" countOfCases={recovered} lastUpdated={lastUpdated}/>
-               </InfoCardsRow>
-               <SearchCompRow onCountryClick={countryClick}/>
-               <Grid item md={12}>
-                    <div>
-                         {state.error}
-                    </div>
-               </Grid>
+               <InfoCardsRow state={state}/>
+               <SearchCompRow onCountryClick={countryClick} />
+               <ChartRow confirmed={state.confirmed} recovered={state.recovered} deaths={state.deaths}/>
           </Grid>
           
      );

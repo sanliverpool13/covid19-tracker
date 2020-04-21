@@ -2,16 +2,13 @@ import React, { useState, useCallback, Fragment, useMemo, useEffect, useRef } fr
 import { Paper, InputBase, IconButton, Icon } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import styles from "./Search.module.css";
-import { countries } from "../../api/countrycodes";
+import { getCountriesArray } from "../../api/index";
 
 import { CSSTransition } from "react-transition-group";
 
 
 // Helper Functions
-const isEmpty = (Str) => {
-    return Str.length > 0;
-}
-
+import { isEmpty } from "./HelperFuctions";
 
 
 export const SearchCompAndResults = ({children}) => {
@@ -55,11 +52,11 @@ export const SearchCompAndResults = ({children}) => {
     );
 };
 
-const SearchComponent = ({searchValue, handleChange}) => {
+const SearchComponent = (props) => {
      
      return (
           <Paper component="form" className={styles.searchComponent}>
-            <SearchInput searchValue={searchValue} handleChange={handleChange}/>
+            <SearchInput {...props}/>
             <SearchIcon/>
           </Paper>
      );
@@ -105,15 +102,21 @@ const SearchResults = ({open, receivedChildren,searchValue,setOpen}) => {
 export const SearchDropDown = ({onCountryClick,searchValue, setOpen}) => {
 
     const [inProp, setInProp] = useState(isEmpty(searchValue));
+    const [countries, setCountries] = useState([]);
 
+    useEffect(() => {
+        getCountriesArray()
+            .then(res => setCountries(res))
+            .catch(err => console.log(err));
+    },[]);// should run only once
 
-    let searchResulsts = useMemo(() => Object.keys(countries).map((country) => 
+    let searchResults = useMemo(() => countries.map((country) => 
         <SearchItem key={country} onCountryClick={onCountryClick} country={country} setOpen={setOpen}/>
     ),[countries,onCountryClick]);
 
     let filteredSearchResults = useMemo(() => 
-        searchResulsts.filter(item => item.props.country.toLowerCase().includes(searchValue.toLowerCase())
-    ),[searchValue]);
+        searchResults.filter(item => item.props.country.toLowerCase().includes(searchValue.toLowerCase())
+    ),[searchValue,searchResults]);
 
     return(
             < >
@@ -140,7 +143,7 @@ const SearchItem = ({onCountryClick,country,setOpen}) => {
 
     return(
         
-            <a href="#" className={styles.searchItem} onClick={(e) => {onCountryClick(e,country,countries[country]);
+            <a href="#" className={styles.searchItem} onClick={(e) => {onCountryClick(e,country);
                 setOpen(false);}}>
                 {country}
             </a>

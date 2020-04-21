@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Grid, Card, CardHeader, CardContent, Typography } from '@material-ui/core';
 import styles from "./infoCard.module.css";
 
+
+
 const InfoCard = ({title,countOfCases,lastUpdated}) => {
      
      return (

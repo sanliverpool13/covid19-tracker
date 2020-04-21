@@ -1,15 +1,42 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, IconButton, Tooltip } from '@material-ui/core';
 import styles from './titleRow.module.css';
+import { Public } from "@material-ui/icons";
 
-const TitleRow = ({title}) => {
+import { useToolTipStyle } from "./title.jss";
+
+
+const GlobalBStrapTTip = (props) => {
+
+     const classes = useToolTipStyle();
+      
+      return (
+            <Tooltip title="Show Global" arrow classes={classes} {...props}/>
+      );
+}
+
+const GlobalLink = (props) => {
+      
+      return (
+
+          <IconButton className={styles.globalLink}>
+               <GlobalBStrapTTip  className={styles.globalTooltip}>
+                    <Public {...props}/>
+               </GlobalBStrapTTip>
+          </IconButton>
+      );
+}
+
+
+const TitleRow = ({title,getGlobalTotal}) => {
      
      return (
           <Grid item md={12} className={styles.gridItemTitle}>
               <h1 className={styles.title}>{title}</h1>
-              <a href="#" className={styles.backToGlobalLink}>Global</a>
+              <GlobalLink onClick={getGlobalTotal}/>
           </Grid>
      );
 }
+
 
 export default TitleRow;
