@@ -6,7 +6,7 @@ import SearchCompRow from './Search/SearchComponentRow';
 
 import TitleRow from "./TitleRow/TitleRow";
 import InfoCardsRow from './InformationCards/InfoCardsRow';
-import ChartRow from './Charts/PieChart';
+import ChartRow from './Charts/ChartRow';
 
 import { getGlobal, getCountry, filterDailyCanada } from "../api/index";
 

@@ -1,8 +1,7 @@
-import React, { Component, useState, useMemo } from 'react';
-import { Grid } from "@material-ui/core";
-import { Pie } from "react-chartjs-2";
+import React, {useMemo} from 'react';
+import { Bar } from "react-chartjs-2";
 
-const PieChart = ({confirmed,recovered,deaths}) => {
+const BarChart = ({confirmed,recovered,deaths}) => {
      
     const data = useMemo(() => {
         let temp ={
@@ -10,6 +9,7 @@ const PieChart = ({confirmed,recovered,deaths}) => {
             'Confirmed','Deaths','Recovered',
         ],
         datasets:[{
+            label:'Ratios',
             data: [confirmed,deaths,recovered],
             backgroundColor: [
                 '#e0e0e0',
@@ -26,10 +26,11 @@ const PieChart = ({confirmed,recovered,deaths}) => {
     },[confirmed,recovered,deaths]);
 
      return (
-          <Pie
+          <Bar
             data={data}
+            
           />
      );
 }
 
-export default PieChart;
+export default BarChart;
