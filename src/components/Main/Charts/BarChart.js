@@ -1,16 +1,18 @@
 import React, {useMemo} from 'react';
 import { Bar } from "react-chartjs-2";
 
-const BarChart = ({confirmed,recovered,deaths}) => {
+const BarChart = ({active,recovered,deaths}) => {
+
+    
      
     const data = useMemo(() => {
         let temp ={
         labels: [
-            'Confirmed','Deaths','Recovered',
+            'Active','Deaths','Recovered',
         ],
         datasets:[{
-            label:'Ratios',
-            data: [confirmed,deaths,recovered],
+            label:'Covid-19 Survival Ratio',
+            data: [active,deaths,recovered],
             backgroundColor: [
                 '#e0e0e0',
                 '#f44336',
@@ -23,12 +25,14 @@ const BarChart = ({confirmed,recovered,deaths}) => {
             ],
         }],}
         return temp;
-    },[confirmed,recovered,deaths]);
+    },[active,recovered,deaths]);
 
      return (
           <Bar
             data={data}
-            
+            width={600}
+            height={300}
+            options={{ maintainAspectRatio: false }}
           />
      );
 }

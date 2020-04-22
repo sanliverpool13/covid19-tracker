@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useCallback } from 'react';
+import React, { useEffect, useReducer, useCallback, useMemo, useContext } from 'react';
 import { Grid,} from "@material-ui/core";
 import styles from './main.module.css';
 // import cx from 'classnames';
@@ -7,6 +7,8 @@ import SearchCompRow from './Search/SearchComponentRow';
 import TitleRow from "./TitleRow/TitleRow";
 import InfoCardsRow from './InformationCards/InfoCardsRow';
 import ChartRow from './Charts/ChartRow';
+
+import { NavBarContext } from "../../Context";
 
 import { getGlobal, getCountry, filterDailyCanada } from "../api/index";
 
@@ -79,6 +81,10 @@ const MainPage = () => {
 
      const [state, dispatch] = useReducer(reducer,initialState);
 
+     const {confirmed, recovered, deaths} = state;
+
+     
+
      const getGlobalTotal = useCallback(async () => {
           try {
                let res = await getGlobal();
@@ -102,7 +108,7 @@ const MainPage = () => {
      },[getGlobalTotal]);
 
      const countryClick = useCallback( async (e,country) => {
-          
+          e.preventDefault();
           try {
                 let res = await getCountry(country);
                 dispatch({
@@ -118,15 +124,40 @@ const MainPage = () => {
           }
      },[getCountry]);
 
+     
+
      return (
           <Grid container className={styles.gridContainer}>
                <TitleRow title={state.category} getGlobalTotal={getGlobalTotal}/>
-               <InfoCardsRow state={state}/>
+               <DataRow state={state}/>
+               {/* <InfoCardsRow state={state}/> */}
                <SearchCompRow onCountryClick={countryClick} />
-               <ChartRow confirmed={state.confirmed} recovered={state.recovered} deaths={state.deaths}/>
+               {/* <ChartRow active={activeCases} recovered={state.recovered} deaths={state.deaths}/> */}
           </Grid>
           
      );
+};
+
+
+const DataRow = ({state}) => {
+      
+     const NavBarCntxt = useContext(NavBarContext);
+     const {tabPicked} = NavBarCntxt;
+     
+     const activeCases = useMemo(() => {
+          return state.confirmed-state.recovered-state.deaths;
+     });
+
+     if(tabPicked === 'Cards'){
+          return(
+               <InfoCardsRow state={state}/>
+          );
+     }else{
+          return(
+               <ChartRow active={activeCases} recovered={state.recovered} deaths={state.deaths} typeOfChart={tabPicked}/>
+          )
+     }
+
 }
 
 

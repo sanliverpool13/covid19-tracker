@@ -5,10 +5,13 @@ import { Grid } from "@material-ui/core";
 
 const ChartRow = (props) => {
      
+    
+
     return (
          <Grid item md={12} >
-            <PieChart {...props}/>
-            <BarChart {...props}/>
+             {(props.typeOfChart === 'Pie') 
+             ? <PieChart {...props}/>
+            : <BarChart {...props}/>}
          </Grid>
     );
 }

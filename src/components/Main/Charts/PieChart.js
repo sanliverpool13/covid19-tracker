@@ -2,15 +2,15 @@ import React, { Component, useState, useMemo } from 'react';
 import { Grid } from "@material-ui/core";
 import { Pie } from "react-chartjs-2";
 
-const PieChart = ({confirmed,recovered,deaths}) => {
+const PieChart = ({active,recovered,deaths}) => {
      
     const data = useMemo(() => {
         let temp ={
         labels: [
-            'Confirmed','Deaths','Recovered',
+            'Active','Deaths','Recovered',
         ],
         datasets:[{
-            data: [confirmed,deaths,recovered],
+            data: [active,deaths,recovered],
             backgroundColor: [
                 '#e0e0e0',
                 '#f44336',
@@ -23,11 +23,14 @@ const PieChart = ({confirmed,recovered,deaths}) => {
             ],
         }],}
         return temp;
-    },[confirmed,recovered,deaths]);
+    },[active,recovered,deaths]);
 
      return (
           <Pie
             data={data}
+            width={600}
+            height={300}
+            options={{ maintainAspectRatio: false }}
           />
      );
 }
