@@ -9,11 +9,11 @@
     display: grid;
     height: var(--g-height);
     /* width: var(--g-width); */
-    grid-template-columns: 7% auto;
+    grid-template-columns: auto;
     grid-template-rows: var(--h-row) var(--i-row) auto;
     grid-template-areas: 
-        "navbar header"
-        "navbar info"
-        "navbar search";
+        "header"
+        "info"
+        "search";
 }
 

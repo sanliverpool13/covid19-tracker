@@ -10,10 +10,8 @@ const App = () => {
     return(
         
         <NavBarContextProvider>
-            <GridContainer>
-                <NavBar/>
-                <MainPage/>
-            </GridContainer>
+            <NavBar/>
+            <MainPage/>
         </NavBarContextProvider>
     );
 };

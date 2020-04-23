@@ -15,6 +15,8 @@ import { getGlobal, getCountry, filterDailyCanada } from "../api/index";
 // Import Helper Functions
 import { initialState, reducer } from "./MainHelpers";
 
+import { GridContainer } from "../index";
+
 const MainPage = () => {
 
      const [state, dispatch] = useReducer(reducer,initialState);
@@ -56,13 +58,13 @@ const MainPage = () => {
      
 
      return (
-          <>
+          <GridContainer>
                <TitleRow title={state.category} getGlobalTotal={getGlobalTotal}/>
                <DataRow state={state}/>
                {/* <InfoCardsRow state={state}/> */}
                <SearchCompRow onCountryClick={countryClick} />
                {/* <ChartRow active={activeCases} recovered={state.recovered} deaths={state.deaths}/> */}
-          </>
+          </GridContainer>
      );
 };
 

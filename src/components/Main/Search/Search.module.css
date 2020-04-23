@@ -1,12 +1,12 @@
 
-.searchItem {
+.searchGridItem {
     grid-area: search;
     display: flex;
     justify-content: center;
     /* border: 1px solid black; */
     /* height: 30%; */
     /* padding-bottom: 30px; */
-    height:410px;
+    /* height:410px; */
 }
 
 :root{
