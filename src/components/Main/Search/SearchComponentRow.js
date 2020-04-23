@@ -6,7 +6,7 @@ import { SearchCompAndResults, SearchDropDown } from "./Search";
 const SearchCompRow = ({onCountryClick}) => {
      
      return (
-          <Grid item md={12} className={styles.searchGridItem} >
+          <Grid item md={12} className={styles.searchGridItem}>
               <SearchCompAndResults>
                   <SearchDropDown onCountryClick={onCountryClick}/>
               </SearchCompAndResults>

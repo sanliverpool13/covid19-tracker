@@ -29,7 +29,9 @@ const NavItem = ({IconElement,name}) => {
      return (
         
         <li className={styles.navItem}>
-            <a className={styles.navLink} onClick={(e) => selectTab(e,name)}>
+            <a className={(tabPicked === name) ? styles.navLinkActive : styles.navLink} 
+            onClick={(name !== '') ? (e) => selectTab(e,name)
+                    : null}>
             <span className={styles.linkText}>{name}</span>
                 <IconElement className={styles.linkIcon}/>
             </a>

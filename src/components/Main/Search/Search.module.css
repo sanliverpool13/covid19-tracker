@@ -5,7 +5,8 @@
     align-items: flex-start;
     /* border: 1px solid black; */
     /* height: 30%; */
-    padding-bottom: 30px;
+    /* padding-bottom: 30px; */
+    height:410px;
 }
 
 :root{

@@ -23,7 +23,7 @@
 
 .navLink {
     display: flex;
-    /* justify-content: center; */
+    cursor: default;
     align-items: center;
     height: 70px;
     color: grey;
@@ -32,9 +32,20 @@
     transition: 600ms;
 }
 
+.navLinkActive {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    height: 70px;
+    color: white;
+    text-decoration: none;
+    filter: grayscale(0%) opacity(1);
+    /* transition: 600ms; */
+}
+
 .navLink:hover {
     filter: grayscale(0%) opacity(1);
-    /* background: #212121; */
+    cursor: pointer;
     color: white;
 }
 
@@ -55,6 +66,11 @@
 
 .navItem:last-child .navLink .linkIcon{
     margin-left: 10px;
+}
+
+.navItem:last-child .navLink:hover{
+    color: grey;
+    filter: grayscale(70%) opacity(0.7);
 }
 
 

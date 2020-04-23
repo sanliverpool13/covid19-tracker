@@ -31,7 +31,7 @@ const GlobalLink = (props) => {
 const TitleRow = ({title,getGlobalTotal}) => {
      
      return (
-          <Grid item md={12} className={styles.gridItemTitle}>
+          <Grid item md={12} className={styles.gridItemTitle} >
               <h1 className={styles.title}>{title}</h1>
               <GlobalLink onClick={getGlobalTotal}/>
           </Grid>

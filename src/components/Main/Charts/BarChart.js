@@ -11,7 +11,6 @@ const BarChart = ({active,recovered,deaths}) => {
             'Active','Deaths','Recovered',
         ],
         datasets:[{
-            label:'Covid-19 Survival Ratio',
             data: [active,deaths,recovered],
             backgroundColor: [
                 '#e0e0e0',

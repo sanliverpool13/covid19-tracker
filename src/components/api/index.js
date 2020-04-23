@@ -1,15 +1,36 @@
 import axios from 'axios';
 
+const url = 'https://covid19.mathdro.id/api';
 
-// get global cases endpoint
-export const getGlobal = () =>  axios.get('https://covid19.mathdro.id/api');
 
-// get cases by country endpoint
-export const getCountry = (country) => axios.get(`https://covid19.mathdro.id/api/countries/${country}`);
+
+export const getGlobal = async() =>  {
+    try {
+        const {data:{confirmed,recovered,deaths,lastUpdate}} = await axios.get(url);
+        
+        return {confirmed,recovered,deaths,lastUpdated:lastUpdate};
+    } catch(err) {
+        console.log(err);
+        return {err}; 
+    }
+};
+
+
+export const getCountry = async (country) => {
+
+    try {
+        const {data:{confirmed,recovered,deaths,lastUpdate}} = await axios.get(`${url}/countries/${country}`);
+        return {confirmed,recovered,deaths,lastUpdated:lastUpdate};
+    } catch (err) {
+        return{err};
+    }
+    
+
+}
 
 
 // get daily report 
-export const getDailyCountry = (date) => axios.get(`https://covid19.mathdro.id/api/daily/${date}`)
+export const getDailyCountry = (date) => axios.get(`${url}/daily/${date}`)
 
 // Test: get daily report for Canada
 export const filterDailyCanada = async () => {
