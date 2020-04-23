@@ -26,3 +26,8 @@
     height: 60%;
 }
 
+
+.infoItem {
+    grid-area: info;
+}
+

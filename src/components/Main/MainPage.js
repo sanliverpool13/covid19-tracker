@@ -56,14 +56,13 @@ const MainPage = () => {
      
 
      return (
-          <Grid container className={styles.gridContainer}>
+          <>
                <TitleRow title={state.category} getGlobalTotal={getGlobalTotal}/>
                <DataRow state={state}/>
                {/* <InfoCardsRow state={state}/> */}
                <SearchCompRow onCountryClick={countryClick} />
                {/* <ChartRow active={activeCases} recovered={state.recovered} deaths={state.deaths}/> */}
-          </Grid>
-          
+          </>
      );
 };
 
@@ -77,16 +76,17 @@ const DataRow = ({state}) => {
           return state.confirmed-state.recovered-state.deaths;
      });
 
-     if(tabPicked === 'Cards'){
-          return(
-               <InfoCardsRow state={state}/>
-          );
-     }else{
-          return(
+     
+     return(
+          <div className={styles.infoItem}>
+               {(tabPicked === 'Cards') 
+               ? <InfoCardsRow state={state}/>
+               : 
                <ChartRow active={activeCases} recovered={state.recovered} deaths={state.deaths} typeOfChart={tabPicked}/>
-          )
-     }
-
+               }
+          </div>
+     )
+     
 }
 
 

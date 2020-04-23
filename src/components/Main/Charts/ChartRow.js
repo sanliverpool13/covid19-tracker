@@ -8,11 +8,11 @@ const ChartRow = (props) => {
     
 
     return (
-         <Grid item md={12} >
+         <>
              {(props.typeOfChart === 'Pie') 
              ? <PieChart {...props}/>
             : <BarChart {...props}/>}
-         </Grid>
+         </>
     );
 }
 

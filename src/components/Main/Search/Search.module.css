@@ -1,8 +1,8 @@
 
-.searchGridItem {
+.searchItem {
+    grid-area: search;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
     /* border: 1px solid black; */
     /* height: 30%; */
     /* padding-bottom: 30px; */
@@ -20,7 +20,7 @@
     padding: var(--padding-vertical) var(--padding-horizontal);
     display: flex;
     width: var(--search-width);
-    margin-top: 40px;
+    /* margin-top: 40px; */
     background-color: #212121 !important;
     color: white !important;
 }

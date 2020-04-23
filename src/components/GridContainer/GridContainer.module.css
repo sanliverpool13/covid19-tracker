@@ -1,0 +1,19 @@
+:root{
+    --g-height: 100vh;
+    --h-row: calc(var(--g-height)*0.25);
+    --i-row: calc(var(--g-height)*0.4);
+    --s-row: calc(var(--g-height)*0.35);
+}
+
+.gridContainer {
+    display: grid;
+    height: var(--g-height);
+    /* width: var(--g-width); */
+    grid-template-columns: 7% auto;
+    grid-template-rows: var(--h-row) var(--i-row) auto;
+    grid-template-areas: 
+        "navbar header"
+        "navbar info"
+        "navbar search";
+}
+

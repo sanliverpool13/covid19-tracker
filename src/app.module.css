@@ -2,6 +2,7 @@ body {
     background-color: rgba(33,33,33,0.96);
     font-family: 'Raleway',  serif;
     margin: 0;
+    
     /* transition: 700ms ease; */
     overflow-y: scroll;
 }
@@ -19,8 +20,3 @@ body::-webkit-scrollbar-thumb{
     background: #141414;
 }
 
-
-
-.containerWidth{
-    width:90%;
-}  
