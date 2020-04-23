@@ -5,6 +5,7 @@
     /* transition: width 600ms ease; */
     color: white;
     overflow: auto;
+    width: 7%
 }
 
 .navbarUl {

@@ -6,6 +6,7 @@
 }
 
 .gridContainer {
+    margin-left: 7%;
     display: grid;
     height: var(--g-height);
     /* width: var(--g-width); */
