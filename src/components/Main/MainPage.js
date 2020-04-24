@@ -40,6 +40,7 @@ const MainPage = () => {
 
      useEffect(() => {
           getGlobalTotal();
+          filterDailyCanada();
      },[getGlobalTotal]);
 
      const countryClick = useCallback( (e,country) => {

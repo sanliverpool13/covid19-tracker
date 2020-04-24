@@ -32,13 +32,45 @@ export const getCountry = async (country) => {
 // get daily report 
 export const getDailyCountry = (date) => axios.get(`${url}/daily/${date}`)
 
+
+const dates = ['2-15-2020','2-25-2020','3-3-2020','3-10-2020','3-20-2020','3-29-2020','4-3-2020',
+'4-10-2020','4-15-2020','4-20-2020','4-23-2020']
+
+const initTotals = {'confirmed':0,'deaths':0,'recovered':0};
+const addTotals =  (acc, curr, currIndex, arr) => {
+    console.log(`The current is ${curr}`);
+    // acc = initState at first
+    acc.confirmed += parseInt(curr.confirmed);
+    acc.deaths += parseInt(curr.deaths);
+    acc.recovered += parseInt(curr.recovered);
+    return acc;
+}
+
 // Test: get daily report for Canada
 export const filterDailyCanada = async () => {
     try {
          
-        let res = await getDailyCountry('4-17-2020');
-        let canadaData = res.data.filter(element => element["countryRegion"] === "Canada");
-        
+        let results = await Promise.all([
+            getDailyCountry(dates[0]),
+            getDailyCountry(dates[1]),
+            getDailyCountry(dates[2]),
+            getDailyCountry(dates[3]),
+            getDailyCountry(dates[4]),
+            getDailyCountry(dates[5]),
+            getDailyCountry(dates[6]),
+            getDailyCountry(dates[7]),
+            getDailyCountry(dates[8]),
+            getDailyCountry(dates[9]),
+            getDailyCountry(dates[10]),
+        ]);
+        let filteredResults = [];
+        console.log(results);
+        results.forEach((result) => {
+            filteredResults.push(result.data.filter(element => element["countryRegion"] === "Canada"));
+        });
+        console.log(filteredResults);
+        const totalsCanada = filteredResults.reduce(addTotals,initTotals);
+        console.log(totalsCanada);
         
     } catch(err) {
          return err.response.data;
