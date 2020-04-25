@@ -5,6 +5,7 @@ export const NavBarContext = createContext();
 export const NavBarContextProvider = ({children}) => {
 
     const [tabPicked, setTabPicked] = useState('Cards');//default will be cards
+    const [country, setCountry] = useState('');
 
     const selectTab = useCallback((e,tabName) => {
         e.preventDefault();
@@ -13,7 +14,7 @@ export const NavBarContextProvider = ({children}) => {
     },[]);
      
      return (
-          <NavBarContext.Provider value={{tabPicked, selectTab}}>
+          <NavBarContext.Provider value={{tabPicked, selectTab, country, setCountry}}>
               {children}
           </NavBarContext.Provider>
      );

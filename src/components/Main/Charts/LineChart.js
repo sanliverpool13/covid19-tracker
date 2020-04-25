@@ -1,16 +1,27 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useContext } from 'react';
 import { Line } from 'react-chartjs-2';
-import { filterDailyCanada } from "../../api/index";
+import { getDailyDataByCountry, getDailyDataGlobal } from "../../api/index";
+import { NavBarContext} from '../../../Context';
 
-const LineChart = () => {
+const LineChart = ({searchValue}) => {
+
+    const CountryCntxt = useContext(NavBarContext);
+    const {country} = CountryCntxt;
 
     const [dailyData, setDailyData] = useState([]);
 
     useEffect(() => {
-        filterDailyCanada('South Korea')
+        if(country !== ''){
+            getDailyDataByCountry(country)
             .then(res => setDailyData(res))
             .catch(err => console.log(err));
-    },[filterDailyCanada]);
+        }else{
+            getDailyDataGlobal()
+                .then(res => setDailyData(res))
+                .catch(err => console.log(err));
+        }
+        
+    },[country]);
 
     const lineChart = useMemo(() => {
         return (<Line

@@ -19,6 +19,9 @@ import { GridContainer } from "../index";
 
 const MainPage = () => {
 
+     const Cntxt = useContext(NavBarContext);
+     const {setCountry} = Cntxt;
+
      const [state, dispatch] = useReducer(reducer,initialState);
      
      const getGlobalTotal = useCallback(() => {
@@ -40,20 +43,20 @@ const MainPage = () => {
 
      useEffect(() => {
           getGlobalTotal();
-          filterDailyCanada();
      },[getGlobalTotal]);
 
      const countryClick = useCallback( (e,country) => {
           e.preventDefault();
-         getCountry(country)
-          .then(res => dispatch({
-               type: 'Country_Code',
-               payload: {res,category:country}
-          }))
-          .catch(err => dispatch({
-               type:'Error',
-               payload: err
-          }));
+          setCountry(country);
+          getCountry(country)
+               .then(res => dispatch({
+                    type: 'Country_Code',
+                    payload: {res,category:country}
+               }))
+               .catch(err => dispatch({
+                    type:'Error',
+                    payload: err
+               }));
      },[getCountry]);
 
      

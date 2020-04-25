@@ -12,7 +12,7 @@ const ChartRow = (props) => {
              ? <PieChart {...props}/>
             : (props.typeOfChart === 'Bar') 
                 ? (<BarChart {...props}/>) 
-                : (<LineChart/>)
+                : (<LineChart {...props}/>)
             }
          </>
     );
