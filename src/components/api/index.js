@@ -33,11 +33,11 @@ export const getCountry = async (country) => {
 export const getDailyCountry = (date) => axios.get(`${url}/daily/${date}`)
 
 
-const dates = ['2-15-2020','2-25-2020','3-3-2020','3-10-2020','3-20-2020','3-29-2020','4-3-2020',
-'4-10-2020','4-15-2020','4-20-2020','4-23-2020']
+const dates = ['2-15-2020','2-25-2020','3-3-2020','3-6-2020','3-10-2020','3-15-2020','3-17-2020','3-20-2020','3-24-2020','3-26-2020',
+'3-29-2020','4-1-2020','4-3-2020','4-5-2020','4-8-2020','4-10-2020','4-13-2020','4-15-2020','4-16-2020','4-20-2020','4-24-2020',]
 
 
-const addTotals =  (acc, curr, currIndex, arr) => {
+const addTotals =  (acc, curr) => {
     // acc = initState at first
     acc.confirmed += parseInt(curr.confirmed);
     acc.deaths += parseInt(curr.deaths);
@@ -46,7 +46,7 @@ const addTotals =  (acc, curr, currIndex, arr) => {
 }
 
 // Test: get daily report for Canada
-export const filterDailyCanada = async () => {
+export const filterDailyCanada = async (country) => {
     try {
          
         let results = await Promise.all([
@@ -61,14 +61,37 @@ export const filterDailyCanada = async () => {
             getDailyCountry(dates[8]),
             getDailyCountry(dates[9]),
             getDailyCountry(dates[10]),
+            getDailyCountry(dates[11]),
+            getDailyCountry(dates[12]),
+            getDailyCountry(dates[13]),
+            getDailyCountry(dates[14]),
+            getDailyCountry(dates[15]),
+            getDailyCountry(dates[16]),
+            getDailyCountry(dates[17]),
+            getDailyCountry(dates[18]),
+            getDailyCountry(dates[19]),
+            getDailyCountry(dates[20]),
+
         ]);
         let ConfirmedDeathsRecovered = [];
         results.forEach((result) => {
-            const filteredCanada = result.data.filter(element => element["countryRegion"] === "Canada");
+            const filteredCanada = result.data.filter(element => element["countryRegion"] === country);
+            
             const initTotals = {'confirmed':0,'deaths':0,'recovered':0};
             const filterCanadaReduced = filteredCanada.reduce(addTotals,initTotals);
+            
             ConfirmedDeathsRecovered.push(filterCanadaReduced);
         });
+
+        ConfirmedDeathsRecovered.forEach((curr,index,arr) => {
+            if(index!==0){
+                curr.confirmed -= arr[index-1].confirmed;
+                curr.deaths -= arr[index-1].deaths;
+                curr.recovered -= arr[index-1].recovered;
+            }
+            curr.date = dates[index];
+        });
+        console.log(ConfirmedDeathsRecovered);
         
         return ConfirmedDeathsRecovered;// [{confirmed,deaths,recovered},...]
         

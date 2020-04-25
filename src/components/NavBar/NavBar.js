@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styles from './Navbar.module.css';
-import { PieChart, List, BarChart, FeaturedPlayList } from "@material-ui/icons";
+import { PieChart, List, BarChart, FeaturedPlayList, Timeline } from "@material-ui/icons";
 import { NavBarContext } from "../../Context";
 
 const NavBar = () => {
@@ -14,6 +14,7 @@ const NavBar = () => {
                 <NavItem IconElement={FeaturedPlayList} name="Cards"/>
                 <NavItem IconElement={PieChart} name="Pie"/>
                 <NavItem IconElement={BarChart} name="Bar"/>
+                <NavItem IconElement={Timeline} name="Line"/>
                 <NavItem IconElement={List} name=""/>
               </ul>
           </nav>

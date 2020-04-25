@@ -1,8 +1,7 @@
 import React from 'react';
 import PieChart from "./PieChart";
 import BarChart from './BarChart';
-import { Grid } from "@material-ui/core";
-
+import LineChart from './LineChart';
 const ChartRow = (props) => {
      
     
@@ -11,7 +10,10 @@ const ChartRow = (props) => {
          <>
              {(props.typeOfChart === 'Pie') 
              ? <PieChart {...props}/>
-            : <BarChart {...props}/>}
+            : (props.typeOfChart === 'Bar') 
+                ? (<BarChart {...props}/>) 
+                : (<LineChart/>)
+            }
          </>
     );
 }
