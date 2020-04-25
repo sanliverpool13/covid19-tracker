@@ -30,14 +30,17 @@ export const getCountry = async (country) => {
 
 
 // get daily report 
-const getDailyCountryUrl = (date) => axios.get(`${url}/daily/${date}`)
+const getDailyByDate = (date) => {
+    return () => axios.get(`${url}/daily/${date}`);
+};
+
 const getDailyGlobal = () => axios.get(`${url}/daily`);
 
 // const dates = ['2-15-2020','2-25-2020','3-3-2020','3-6-2020','3-10-2020','3-15-2020','3-17-2020','3-20-2020','3-24-2020','3-26-2020',
 // '3-29-2020','4-1-2020','4-3-2020','4-5-2020','4-8-2020','4-10-2020','4-13-2020','4-15-2020','4-16-2020','4-20-2020','4-24-2020',]
 
 const dates = [];
-const DailyCountryRequests = [];
+
 
 const addTotals =  (acc, curr) => {
     // acc = initState at first
@@ -49,13 +52,18 @@ const addTotals =  (acc, curr) => {
 
 // Test: get daily report for Canada
 export const getDailyDataByCountry = async (country) => {
+    
+    const DailyCountryRequests = [];
     try {
         let {data} = await getDailyGlobal();
         data.forEach((el) => {
             dates.push(el.reportDate);
+            DailyCountryRequests.push(getDailyByDate(el.reportDate));
         });
 
-        let results = await Promise.all();
+        let results = await Promise.all(
+            DailyCountryRequests.map((el) => el())
+        );
 
         let DailyTotalData = [];
 
@@ -67,7 +75,7 @@ export const getDailyDataByCountry = async (country) => {
             
             DailyTotalData.push(filtByCntryReduced);
         });
-
+        console.log(DailyTotalData);
         const DailySpecificData = [];
         DailyTotalData.forEach((curr,index,arr) => {
             var data = {}
@@ -99,6 +107,7 @@ export const getDailyDataByCountry = async (country) => {
 
 export const getDailyDataGlobal = async () => {
     try {
+       
         let {data} = await getDailyGlobal();
         let dailyDataArr = [];
         data.forEach((el) => {
